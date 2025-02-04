@@ -21,6 +21,9 @@ app.use('/assets', assetRoutes);
 import formRoutes from './routes/formRoutes.js';
 app.use('/api/forms', formRoutes);
 
+import ExploreRoutes from './routes/exploreRoutes.js';
+app.use('/explore', ExploreRoutes);
+
 
 
 const PORT = process.env.PORT || 5000;

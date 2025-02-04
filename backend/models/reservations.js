@@ -11,6 +11,7 @@ const reservationSchema = new mongoose.Schema({
 	numberOfGuests: { type: Number, required: true, min: 1, max: 3 },
 	breakfast: { type: Boolean, required: true },
 	ssLocation: { type: String, required: true },
+	verified: { type: Boolean, default: false },
 });
 
 const Reservation = mongoose.model("Reservation", reservationSchema);
