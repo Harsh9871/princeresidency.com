@@ -4,6 +4,7 @@ import Footer from '@/components/Footer'
 import Hero from '@/components/Hero'
 import ExploreSection from '@/components/ExploreSection'
 import GallerySection from '@/components/GallerySection'
+import FormSection from '@/components/FormSection'
 
 const Home = () => {
     return (
@@ -12,6 +13,7 @@ const Home = () => {
             <Hero />
             <ExploreSection />
             <GallerySection />
+            <FormSection/>
             <Footer />
 
            

@@ -1,9 +1,13 @@
 import React from 'react'
-
+import Navbar from '@/components/Navbar'
+import Footer from '@/components/Footer'
+import FormSection from '@/components/FormSection'
 const ContactForm = () => {
   return (
     <div>
-      <h1>Contact form</h1>
+        <Navbar />
+        <FormSection/>
+        <Footer />
     </div>
   )
 }

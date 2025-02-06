@@ -1,16 +1,19 @@
 import { create } from 'zustand';
-import useExplorationStore from './index';
 
 const useFormStore = create((set) => ({
+  numberOfGuests: 1,
+  setNumberOfGuests: (guests) => set({ numberOfGuests: guests }),
 
-    numberOfGuests: 1,
+  typeOfRoom: 'Exclusive',
+  setTypeOfRoom: (type) => set({ typeOfRoom: type }),
 
-    setNumberOfGuests: (guests) => set({ numberOfGuests:guests }),
+  checkInDate: null,
+  checkOutDate: null,
+  setCheckInDate: (date) => set({ checkInDate: date }),
+  setCheckOutDate: (date) => set({ checkOutDate: date }),
 
-    typeOfroom : 'Executive',
-    setTypeOfRoom: (type) => set({ typeOfroom: type }),
-    
-    getExplorationState: () => useExplorationStore.getState().currentExploration,
+  includeBreakfast: false,
+  setIncludeBreakfast: (value) => set({ includeBreakfast: value }),
 }));
 
 export default useFormStore;

@@ -24,6 +24,8 @@ app.use('/api/forms', formRoutes);
 import ExploreRoutes from './routes/exploreRoutes.js';
 app.use('/explore', ExploreRoutes);
 
+import uploadServiceRoutes from './routes/uploadServiceRoutes.js';
+app.use('/upload', uploadServiceRoutes);
 
 
 const PORT = process.env.PORT || 5000;

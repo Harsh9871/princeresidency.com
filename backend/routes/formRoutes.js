@@ -1,10 +1,10 @@
 import express from "express";
-const router = express.Router();
+const formRoute = express.Router();
 import { qrForForm, submitForm } from "../controllers/formController.js";
 import validateQRRequest from "../validation/qrMiddleware.js";
 import validateFormSubmission from "../validation/paymentMiddleware.js";
 
-router.post("/qr", validateQRRequest, qrForForm);
-router.post("/submit", validateFormSubmission , submitForm);
+formRoute.post("/qr", qrForForm);
+formRoute.post("/submit" , submitForm );
 
-export default router;
+export default formRoute;

@@ -4,7 +4,7 @@ const submitForm = async (req, res) => {
 
     try {
         
-        const reservation = await Reservation.create({
+        const reservation = await Reservation({
             name: req.body.name,
             email: req.body.email,
             whatsappNumber: req.body.whatsappNumber,
@@ -16,7 +16,7 @@ const submitForm = async (req, res) => {
             breakfast: req.body.breakfast === "true", 
             ssLocation: req.body.ssLocation, 
         });
-
+        await reservation.save();
         
         res.status(201).json({
             message: "Reservation created successfully!",
@@ -29,8 +29,11 @@ const submitForm = async (req, res) => {
 };
 
 const qrForForm = async (req, res) => { 
+    console.log("Received form data:", req.body);
+    
     res.send({
         qrCode: "http://localhost:5000/assets/qr/qrcode.png",
+        
     })
 };
 
