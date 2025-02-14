@@ -1,56 +1,24 @@
-const validatePaymentRequest = (req, res, next) => {
-    const errors = [];
+import { body, validationResult } from "express-validator";
 
-    if (!req.body.name || req.body.name.trim() === "") {
-        errors.push({ msg: "Name is required" });
-    }
+const validateFormSubmission = [
+    body("name").notEmpty().withMessage("Name is required."),
+    body("email").isEmail().withMessage("Valid email is required."),
+    body("whatsappNumber").notEmpty().withMessage("WhatsApp number is required."),
+    body("checkInDate").isISO8601().toDate().withMessage("Valid check-in date is required."),
+    body("checkOutDate").isISO8601().toDate().withMessage("Valid check-out date is required."),
+    body("roomLocation").notEmpty().withMessage("Room location is required."),
+    body("roomType").notEmpty().withMessage("Room type is required."),
+    body("numberOfGuests").isInt({ min: 1 }).withMessage("Number of guests must be at least 1."),
+    body("breakfast").isBoolean().withMessage("Breakfast must be true or false."),
+    body("ssLocation").notEmpty().withMessage("Screenshot location is required."),
 
-    if (!req.body.email || !/\S+@\S+\.\S+/.test(req.body.email)) {
-        errors.push({ msg: "Valid email is required" });
-    }
+    (req, res, next) => {
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ errors: errors.array() });
+        }
+        next();
+    },
+];
 
-    if (!req.body.whatsappNumber || req.body.whatsappNumber.trim() === "") {
-        errors.push({ msg: "WhatsApp number is required" });
-    }
-
-    if (!req.body.checkInDate || !isValidDate(req.body.checkInDate)) {
-        errors.push({ msg: "Valid check-in date is required" });
-    }
-
-    if (!req.body.checkOutDate || !isValidDate(req.body.checkOutDate)) {
-        errors.push({ msg: "Valid check-out date is required" });
-    }
-
-    if (!req.body.roomLocation || req.body.roomLocation.trim() === "") {
-        errors.push({ msg: "Room location is required" });
-    }
-
-    if (!req.body.roomType || req.body.roomType.trim() === "") {
-        errors.push({ msg: "Room type is required" });
-    }
-
-    if (!req.body.numberOfGuests || isNaN(req.body.numberOfGuests) || req.body.numberOfGuests < 1 || req.body.numberOfGuests > 3 ) {
-        errors.push({ msg: "Number of guests must be between 1 and 3" });
-    }
-
-    if (req.body.breakfast !== "true" && req.body.breakfast !== "false") {
-        errors.push({ msg: "Breakfast must be a boolean (true or false)" });
-    }
-
-    if (new Date(req.body.checkInDate) > new Date(req.body.checkOutDate)) {
-        errors.push({ msg: "Check-in date must be before check-out date" });
-    }
-
-    if (errors.length > 0) {
-        return res.status(400).json({ errors });
-    }
-
-    next();
-};
-
-// Helper function to validate dates
-const isValidDate = (date) => {
-    return !isNaN(Date.parse(date));
-};
-
-export default validatePaymentRequest;
+export default validateFormSubmission;

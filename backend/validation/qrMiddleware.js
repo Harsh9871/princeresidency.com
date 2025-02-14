@@ -1,52 +1,23 @@
-// Middleware to validate QR Generation request
-const validateQRRequest = (req, res, next) => {
-  const errors = [];
+import { body, validationResult } from "express-validator";
 
-  // Manual validation checks for each field
-  if (!req.body.name || req.body.name.trim() === "") {
-    errors.push({ msg: req.body.name });
-  }
+const validateQRRequest = [
+    body("name").notEmpty().withMessage("Name is required."),
+    body("email").isEmail().withMessage("Valid email is required."),
+    body("whatsappNumber").notEmpty().withMessage("WhatsApp number is required."),
+    body("checkInDate").isISO8601().toDate().withMessage("Valid check-in date is required."),
+    body("checkOutDate").isISO8601().toDate().withMessage("Valid check-out date is required."),
+    body("roomLocation").notEmpty().withMessage("Room location is required."),
+    body("roomType").notEmpty().withMessage("Room type is required."),
+    body("numberOfGuests").isInt({ min: 1 }).withMessage("Number of guests must be at least 1."),
+    body("breakfast").isBoolean().withMessage("Breakfast must be true or false."),
 
-  if (!req.body.email || !/\S+@\S+\.\S+/.test(req.body.email)) {
-    errors.push({ msg: req.body.email });
-  }
+    (req, res, next) => {
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ errors: errors.array() });
+        }
+        next();
+    },
+];
 
-  if (!req.body.whatsappNumber || req.body.whatsappNumber.trim() === "") {
-    errors.push({ msg: req.body.whatsappNumber });
-  }
-
-  if (!req.body.checkInDate || !isValidDate(req.body.checkInDate)) {
-    errors.push({ msg: req.body.checkInDate });
-  }
-
-  if (!req.body.checkOutDate || !isValidDate(req.body.checkOutDate)) {
-    errors.push({ msg: req.body.checkOutDate });
-  }
-
-  if (!req.body.roomCategory || req.body.roomCategory.trim() === "") {
-    errors.push({ msg: req.body.roomCategory });
-  }
-
-  if (!req.body.numberOfGuests || isNaN(req.body.numberOfGuests) || req.body.numberOfGuests < 1) {
-    errors.push({ msg: req.body.numberOfGuests });
-  }
-
-  if (typeof req.body.includeBreakfast !== 'boolean') {
-    errors.push({ msg: req.body.includeBreakfast });
-  }
-
-  // If there are errors, return a response with the error details
-  if (errors.length > 0) {
-    return res.status(400).json({ errors,reqest:req.body });
-  }
-
-  // If no errors, pass control to the next middleware
-  next();
-};
-
-// Utility function to validate ISO 8601 date format
-const isValidDate = (date) => {
-  return !isNaN(Date.parse(date)); // Check if the date can be parsed into a valid date
-};
-
-export default  validateQRRequest ;
+export default validateQRRequest;

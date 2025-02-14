@@ -5,6 +5,6 @@ import validateQRRequest from "../validation/qrMiddleware.js";
 import validateFormSubmission from "../validation/paymentMiddleware.js";
 
 formRoute.post("/qr", qrForForm);
-formRoute.post("/submit" , submitForm );
+formRoute.post("/submit" ,validateFormSubmission, submitForm );
 
 export default formRoute;
