@@ -122,7 +122,7 @@ router.get('/qr/:filename', (req, res) => {
 });
 router.get('/uploads/images/:filename', (req, res) => {
     let __dirname = path.dirname(new URL(import.meta.url).pathname);
-    let imagesPath = path.join(__dirname, '../assets/uploads'); // Correct path to the hotel folder
+    let imagesPath = path.join(__dirname, '../assets/uploads/images'); // Correct path to the hotel folder
     let { filename } = req.params; // Extract filename from URL
     let filePath = path.join(imagesPath, filename); // Get the full path to the image file
 

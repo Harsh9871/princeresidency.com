@@ -20,6 +20,7 @@ const Hero = () => {
                         {/* Golden Glow Text */}
                         <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl text-glow">
                             Welcome to Our {(useStore.getState().currentExploration)} Prince Residancy  
+             
                         </h1>
 
                         {/* Deep Orange Shadow Text */}
@@ -42,7 +43,7 @@ const Hero = () => {
                         <Button
                             variant="outline"
                             size="lg"
-                            onClick={() => setExploration('Club house')}
+                            onClick={() => setExploration('ClubHouse')}
                         >
                             Explore Club House
                         </Button>

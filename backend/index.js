@@ -27,6 +27,11 @@ app.use('/explore', ExploreRoutes);
 import uploadServiceRoutes from './routes/uploadServiceRoutes.js';
 app.use('/upload', uploadServiceRoutes);
 
+import authRoutes from './routes/authRoutes.js';
+app.use("/auth", authRoutes);
+
+import reserve from './routes/reservationRoute.js'
+app.use('/reserve',reserve);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
